@@ -1,0 +1,4 @@
+django>=3.0.7
+pycodestyle==2.6.0
+django-crispy-forms
+slackclient

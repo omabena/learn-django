@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Elegir menú
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2">Menú del día</h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% if menu %}
+    <p>
+        {{ menu.pub_date }}
+    </p>
+    <ul>
+    {% for option in menu.menu_options.all %}
+        <li> {{ option.name }} </li>
+    {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'mealshop:create_reminder' menu.id %}">
+            Mandar recordatorio de menú a los empleados
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'mealshop:update_daily_menu' menu.id %}">
+            Actualizar menú del día
+        </a>
+    </P>
+{% else %}
+    <a href="{% url 'mealshop:create_menu' %}">
+        Crear menú del día
+    </a>
+{% endif %}
+
+{% endblock %}

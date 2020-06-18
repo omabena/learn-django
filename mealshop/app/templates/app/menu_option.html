@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Elegir menú
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2">{{ menu_option.name }}</h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'mealshop:add_customization' menu_option.id %}" method="post">
+    {% csrf_token %}
+    <label for="menu_option_customization">Agregar customización al plato</label><br>
+    <input type="text" name="menu_option_customization" id="menu_option_customization" value="" />
+    <input type="submit" value="customization">
+</form>
+
+<h1> Lista de customizaciones para un plato</h1>
+<ul>
+{% for option in menu_option.menuoptioncustomization_set.all  %}
+    <li> {{ option.name }}  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

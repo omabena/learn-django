@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<h2 class="mt-2">Bienvernido a MealShop</h2>
+<hr class="mt-0 mb-4">
+
+<p>Hola, applicación para hacer pedido de menus de la doña Nora</p>
+{% if menu %}
+<p>
+    Puedes ver el menu de nora en este link: 
+    <a href="{% url 'mealshop:menu' menu.uuid %}">Menu del día</a>
+</p>
+{% else %}
+<p>
+    No hay menú para elegir :(
+</p>
+{% endif %}
+
+{% endblock %}

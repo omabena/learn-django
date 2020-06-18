@@ -1,0 +1,67 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Elegir menú
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2">Menú del día, se cerrará a las 11:00am</h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if menu %}
+<form action="{% url 'mealshop:add_order' menu.id %}" method="post" class="form-group">
+    {% csrf_token %}
+        {% for option in menu.menu_options.all %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="menu_option_id" id="{{option.id}}" value="{{option.id}}" />
+            <label class="form-check-label" for="{{option.id}}">{{ option.name }}</label>
+        </div>
+        {% endfor %}
+        {% if order %}
+        <div class="input-group">
+            <input type="hidden" value="{{ order.id }}" />
+            <button type="submit" value="Actualizar" class="btn btn-success">Actualizar</button>
+        </div>
+        {% else %}
+        <div class="input-group">
+            <button type="submit" value="Elegir" class="btn btn-success">Elegir</button>
+        </div>
+        {% endif %}
+</form>
+{% if order %}
+    <h3>Orden pedida:</h3>
+    <p>{{ order.menu_option.name }}</p>
+    
+    <h3>Customizaciones</h3>
+    <form action="{% url 'mealshop:add_order_customizations' order.id %}" method="post" class="form-group">
+        {% csrf_token %}
+            {% for customization in order.menu_option.menuoptioncustomization_set.all %}
+            <div class="form-check">
+                {% if customization.id in customization_user  %}
+                    <input type="checkbox" 
+                        id="{{customization.id}}"
+                        name="menu_option_customization_{{customization.id}}" checked  class="form-check-input" />
+                {% else %}
+                    <input type="checkbox" 
+                        id="{{customization.id}}"
+                        name="menu_option_customization_{{customization.id}}" class="form-check-input" />
+                {% endif %}
+                    <label for="{{customization.id}}" class="form-check-label">{{ customization.name }}</label>
+            </div>
+            {% endfor %}
+    <div class="input-group">
+        <button type="submit" value="Customizar" class="btn btn-success">Customizar</button>
+    </div>
+    </form>
+{% else %}
+    <p>Elige tu orden, además agrega tus customizaciones si existen</p>
+{% endif %}
+
+{% else %}
+<p>
+    Se ha cerrado el menu del día, esperar a que mañana se habilite, tenga lindo día :)
+</p>
+{% endif %}
+
+{% endblock %}

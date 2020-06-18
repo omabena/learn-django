@@ -1,0 +1,37 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Elegir menú
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2">Crear menú para el día </h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'mealshop:add_menu' %}" method="post">
+    {% csrf_token %}
+    <h3>Elegir opciones de menu </h3>
+    <ul>
+    {% for option in menu_options %}
+        <li> 
+            <label for="menu_option_{{option.id}}">{{ option.name }}</label>
+            <input type="checkbox" name="menu_option_{{option.id}}" id="{{option.id}}" />
+        </li>
+    {% endfor %}
+    </ul>
+    <div>
+        <label for="date">Elegir fecha</label>
+        <input type="text" name="pub_date" id="datetimepicker" />
+    </div>
+
+    <input type="submit" value="Crear">
+</form>
+<script type="text/javascript">
+    window.onload = function() { 
+        $("#datetimepicker").datepicker().datepicker("setDate", new Date());
+    }
+</script>
+
+{% endblock %}

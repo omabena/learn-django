@@ -1,0 +1,30 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Elegir menú
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2"> Lista de opciones menu</h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'mealshop:add_menu_option' %}" method="post">
+    {% csrf_token %}
+    <label for="menu_option_customization">Agregar opción de menú</label><br>
+    <input type="text" name="menu_option_name" id="menu_option_name" value="" />
+    <input type="submit" value="menu_option">
+</form>
+
+<ul>
+{% for option in menu_options %}
+    <li> 
+        <a href="{% url 'mealshop:menu_option' option.id %}">
+            {{ option.name }}
+        </a>  
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

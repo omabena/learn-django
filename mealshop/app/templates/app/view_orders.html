@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Ordenes del día
+{% endblock %}
+
+{% block content %}
+<h2 class="mt-2"> Ordernes del día </h2>
+<hr class="mt-0 mb-4">
+
+{% for order in orders %}
+    <uL>
+        <li> 
+            <p>
+            El usuario <strong>{{ order.user.username }}</strong> ordeno: {{ order.menu_option.name }}
+            </p>
+            <p>
+            <ul>
+            {% for customization in order.ordercustomization_set.all %}
+                <li>
+                    {{ customization.menu_option_custom.name }}
+                </li>
+            {% endfor %}
+            </ul>
+            </p>
+        </li>
+    </ul>
+{% endfor %}
+
+{% endblock %}

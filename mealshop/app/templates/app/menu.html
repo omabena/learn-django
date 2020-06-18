@@ -1,0 +1,26 @@
+
+{% extends 'app/base.html' %}
+{% block title %}
+    Menu del día
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-2">Menú del día, se cerrará a las 11:00am</h2>
+<hr class="mt-0 mb-4">
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if menu %}
+    <ul class="list-group">
+    {% for option in menu.menu_options.all %}
+        <li class="">Opcion  {{ forloop.counter }}: {{ option.name }}</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'mealshop:choose_menu' menu.id %}">Elegír acá</a>
+{% else %}
+<p>
+    Se ha cerrado el menu del día, esperar a que mañana se habilite, tenga lindo día :)
+</p>
+{% endif %}
+
+{% endblock %}

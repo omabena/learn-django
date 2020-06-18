@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% block title %}
+    Menú del día
+{% endblock %}
+
+{% block content %}
+<h1>Actualizar menú del día</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'mealshop:update_daily_menu' menu.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="menu_option">
+</form>
+{% endblock %}
